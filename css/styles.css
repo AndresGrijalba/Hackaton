@@ -1,0 +1,92 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Blanco suave */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    margin: 20px auto;
+    max-width: 1200px;
+    gap: 20px;
+}
+
+/* Header */
+.header {
+    background-color: #007bff; /* Azul */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* Calendar Section */
+.calendar-section {
+    flex: 3;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Section */
+.form-section {
+    flex: 1;
+    padding: 20px;
+    background: #e9f4ff; /* Azul claro */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input,
+form button {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background: #f1f1f1;
+    color: #666;
+    font-size: 14px;
+}
