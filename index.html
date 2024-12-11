@@ -1,76 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planificador de Cultivos Interactivo</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificador de Cultivos Interactivo</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Planificador de Cultivos</h1>
-  </header>
+    <header class="navbar">
+        <img src="assets/LOGO.png" alt="">
+        <h1>PlanTerra - SoftForge</h1>
+    </header>
 
-  <main>
-    <section id="calendar-section">
-      <h2>Calendario de Cultivos</h2>
-      <div id="calendar-controls">
-        <button id="prev-month">← Anterior</button>
-        <span id="current-month">Diciembre 2024</span>
-        <button id="next-month">Siguiente →</button>
+    <main>
+        <section id="calendar-section">
+          <h2>Calendario de Cultivos</h2>
+          <div id="calendar-controls">
+            <button id="prev-month">← Anterior</button>
+            <span id="current-month">Diciembre 2024</span>
+            <button id="next-month">Siguiente →</button>
+          </div>
+          <table id="calendar">
+            <thead>
+              <tr>
+                <th>Dom</th>
+                <th>Lun</th>
+                <th>Mar</th>
+                <th>Mie</th>
+                <th>Jue</th>
+                <th>Vie</th>
+                <th>Sab</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </section>
+    
+        <section id="crops-section">
+          <h2>Gestión de Cultivos</h2>
+          <div id="crops-list">
+            <h3>Lista de Cultivos</h3>
+            <ul id="crop-items">
+            </ul>
+            <button id="add-crop-btn" onclick="openCropModal()">Agregar Cultivo</button>
+        </div>
+        </section>
+    
+        <section id="plan-section">
+            <h2>Planificar Siembra</h2>
+            <form id="plan-form">
+              <label for="crop-select">Selecciona un cultivo:</label>
+              <select id="crop-select">
+              </select>
+          
+              <label for="area-input">Área a sembrar (m²):</label>
+              <input type="number" id="area-input" required>
+          
+              <label for="date-input">Fecha:</label>
+              <input type="date" id="date-input" required>
+          
+              <label for="duration-input">Duración del ciclo (en días):</label>
+              <input type="number" id="duration-input" required>
+          
+              <button type="submit">Planificar</button>
+            </form>
+          </section>
+          
+      </main>
+    
+      <div id="custom-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <p>No hay eventos para este día.</p>
+          <button onclick="closeModal()">Aceptar</button>
+        </div>
+      </div>  
+    
+      <div id="add-crop-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeCropModal()">&times;</span>
+          <h2>Agregar Cultivo</h2>
+          <form id="add-crop-form">
+            <label for="crop-name">Nombre del cultivo:</label>
+            <input type="text" id="crop-name" placeholder="Ingrese el nombre del cultivo" required>
+            <button type="submit">Agregar</button>
+          </form>
+        </div>
       </div>
-      <table id="calendar">
-        <thead>
-          <tr>
-            <th>Dom</th>
-            <th>Lun</th>
-            <th>Mar</th>
-            <th>Mié</th>
-            <th>Jue</th>
-            <th>Vie</th>
-            <th>Sáb</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Se generarán dinámicamente los días -->
-        </tbody>
-      </table>
-    </section>
-
-    <section id="crops-section">
-      <h2>Gestión de Cultivos</h2>
-      <div id="crops-list">
-        <h3>Lista de Cultivos</h3>
-        <ul id="crop-items">
-          <!-- Los cultivos se agregarán dinámicamente -->
-        </ul>
-        <button id="add-crop-btn">Agregar Cultivo</button>
-      </div>
-    </section>
-
-    <section id="plan-section">
-      <h2>Planificar Siembra</h2>
-      <form id="plan-form">
-        <label for="crop-select">Selecciona un cultivo:</label>
-        <select id="crop-select">
-          <!-- Opciones de cultivos dinámicas -->
-        </select>
-
-        <label for="area-input">Área a sembrar (m²):</label>
-        <input type="number" id="area-input" required>
-
-        <label for="date-input">Fecha:</label>
-        <input type="date" id="date-input" required>
-
-        <button type="submit">Planificar</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2024 Planificador de Cultivos</p>
-  </footer>
-
-  <script src="js/calendar.js"></script>
+    
+      <div id="delete-confirmation-modal" class="modal">
+        <div class="modal-content">
+          <div class="checkmark-container">
+            <div class="checkmark">
+              <div class="checkmark-circle"></div>
+              <div class="checkmark-stem"></div>
+              <div class="checkmark-kick"></div>
+            </div>
+          </div>
+          <h2>Eliminado correctamente</h2>
+        </div>
+      </div>  
+      
+      <footer>
+        <p>&copy; 2024 PlanTerra - Derechos reservados</p>
+      </footer>
+    
+      <script src="js/calendar.js"></script>
 </body>
 </html>
