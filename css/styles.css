@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
@@ -12,7 +10,7 @@ body {
   
   /* Header */
   header {
-    background-color: #28a745;
+    background-color: #0a92f7;
     color: white;
     padding: 1rem 0;
     text-align: center;
@@ -40,7 +38,7 @@ body {
   section h2 {
     margin-top: 0;
     font-size: 1.5rem;
-    color: #28a745;
+    color: #0a92f7;
   }
   
   /* Calendar Section */
@@ -52,7 +50,7 @@ body {
   }
   
   #calendar-controls button {
-    background-color: #28a745;
+    background-color: #0a92f7;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -61,7 +59,7 @@ body {
   }
   
   #calendar-controls button:hover {
-    background-color: #218838;
+    background-color: #095691;
   }
   
   #calendar {
@@ -78,13 +76,21 @@ body {
   }
   
   #calendar th {
-    background-color: #28a745;
+    background-color: #0a92f7;
     color: white;
   }
   
   #calendar td:hover {
     background-color: #f1f1f1;
     cursor: pointer;
+  }
+  
+  /* Highlight for cells with events */
+  .has-event {
+    background-color: #cce5ff;
+    border: 1px solid #007bff;
+    color: #007bff;
+    font-weight: bold;
   }
   
   /* Crops Section */
@@ -98,25 +104,26 @@ body {
   }
   
   #crop-items li {
-    background: #e9ecef;
+    background: #ebe9e9;
     margin: 0.5rem 0;
     padding: 0.5rem;
-    border-radius: 4px;
+    border-radius: 5px;
+    display: flex; /* Flexbox para organizar los elementos */
+    justify-content: space-between; /* Separar el texto del botón */
+    align-items: center; /* Alinear verticalmente los elementos */
   }
   
-  #add-crop-btn {
-    display: inline-block;
-    background-color: #28a745;
+  #crop-items li button {
+    background-color: #0a92f7;
     color: white;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 1rem;
   }
   
-  #add-crop-btn:hover {
-    background-color: #218838;
+  #crop-items li button:hover {
+    background-color: #095691;
   }
   
   /* Plan Section */
@@ -138,14 +145,14 @@ body {
   }
   
   #plan-form button {
-    background-color: #28a745;
+    background-color: #0a92f7;
     color: white;
     border: none;
     cursor: pointer;
   }
   
   #plan-form button:hover {
-    background-color: #218838;
+    background-color: #095691;
   }
   
   /* Footer */
@@ -157,3 +164,227 @@ body {
     margin-top: 2rem;
   }
   
+  /* Modal Styles */
+  .modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: left;
+    animation: slideIn 0.5s ease;
+  }
+  
+  .modal-content h2 {
+    color: #0a92f7;
+  }
+  
+  .modal-content .event-info {
+    background: #e9ecef;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .modal-content .event-info p {
+    margin: 5px 0;
+  }
+  
+  .modal-content input {
+    width: 96%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .modal-content button {
+    background-color: #0a92f7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-content button:hover {
+    background-color: #095691;
+  }
+  
+  .close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close-btn:hover,
+  .close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Animaciones para el modal */
+@keyframes slideIn {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+  }
+  
+  /* Aplicar la animación al mostrar el modal */
+  .modal.open .modal-content {
+    animation: slideIn 0.5s ease forwards;
+  }
+  
+  /* Aplicar la animación al cerrar el modal */
+  .modal.close .modal-content {
+    animation: slideOut 0.5s ease forwards;
+  }
+  
+  
+  /* Buttons inside modal */
+  .modal-content .view-btn {
+    background-color: #28a745;
+  }
+  
+  .modal-content .edit-btn {
+    background-color: #ffc107;
+  }
+  
+  .modal-content .delete-btn {
+    background-color: #dc3545;
+  }
+  
+  .modal-content .view-btn:hover {
+    background-color: #218838;
+  }
+  
+  .modal-content .edit-btn:hover {
+    background-color: #e0a800;
+  }
+  
+  .modal-content .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: transparent;
+    border-radius: 4px;
+    height: 30px;
+  }
+  
+  button:hover {
+    background-color: #095691;
+  }
+  
+  .checkmark {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #28a745;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: scaleIn 0.5s ease-out;
+  }
+  
+  .checkmark-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #28a745;
+    position: absolute;
+  }
+  .checkmark-container .checkmark-circle::before {
+    content: "✔";
+    color: white;
+    font-size: 24px;
+  }
+  
+  .checkmark-stem {
+    width: 4px;
+    height: 20px;
+    background-color: white;
+    position: absolute;
+    top: 25%;
+    left: 42%;
+    transform: rotate(45deg);
+    animation: checkmarkStroke 0.2s ease-out 0.5s forwards;
+    opacity: 0;
+  }
+  
+  .checkmark-kick {
+    width: 4px;
+    height: 10px;
+    background-color: white;
+    position: absolute;
+    top: 25%;
+    left: 49%;
+    transform: rotate(-45deg);
+    animation: checkmarkStroke 0.2s ease-out 0.5s forwards;
+    opacity: 0;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes checkmarkStroke {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

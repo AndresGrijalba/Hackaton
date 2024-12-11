@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <h1>Planificador de Cultivos</h1>
+    <h1>SiembraSmart</h1>
   </header>
 
   <main>
@@ -25,10 +25,10 @@
             <th>Dom</th>
             <th>Lun</th>
             <th>Mar</th>
-            <th>Mié</th>
+            <th>Mie</th>
             <th>Jue</th>
             <th>Vie</th>
-            <th>Sáb</th>
+            <th>Sab</th>
           </tr>
         </thead>
         <tbody>
@@ -44,8 +44,8 @@
         <ul id="crop-items">
           <!-- Los cultivos se agregarán dinámicamente -->
         </ul>
-        <button id="add-crop-btn">Agregar Cultivo</button>
-      </div>
+        <button id="add-crop-btn" onclick="openCropModal()">Agregar Cultivo</button>
+    </div>
     </section>
 
     <section id="plan-section">
@@ -70,6 +70,39 @@
   <footer>
     <p>&copy; 2024 Planificador de Cultivos</p>
   </footer>
+
+  <div id="custom-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <p>No hay eventos para este día.</p>
+      <button onclick="closeModal()">Aceptar</button>
+    </div>
+  </div>  
+
+  <div id="add-crop-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCropModal()">&times;</span>
+      <h2>Agregar Cultivo</h2>
+      <form id="add-crop-form">
+        <label for="crop-name">Nombre del cultivo:</label>
+        <input type="text" id="crop-name" placeholder="Ingrese el nombre del cultivo" required>
+        <button type="submit">Agregar</button>
+      </form>
+    </div>
+  </div>  
+
+  <div id="delete-confirmation-modal" class="modal">
+    <div class="modal-content">
+      <div class="checkmark-container">
+        <div class="checkmark">
+          <div class="checkmark-circle"></div>
+          <div class="checkmark-stem"></div>
+          <div class="checkmark-kick"></div>
+        </div>
+      </div>
+      <h2>Eliminado correctamente</h2>
+    </div>
+  </div>  
 
   <script src="js/calendar.js"></script>
 </body>
