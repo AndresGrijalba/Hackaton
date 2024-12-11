@@ -1,92 +1,159 @@
-/* Reset CSS */
-* {
+/* styles.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-/* General */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa; /* Blanco suave */
-    color: #333;
     line-height: 1.6;
-}
-
-.container {
-    display: flex;
-    margin: 20px auto;
-    max-width: 1200px;
-    gap: 20px;
-}
-
-/* Header */
-.header {
-    background-color: #007bff; /* Azul */
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Header */
+  header {
+    background-color: #28a745;
     color: white;
-    padding: 10px 20px;
+    padding: 1rem 0;
     text-align: center;
-}
-
-/* Calendar Section */
-.calendar-section {
-    flex: 3;
-    padding: 20px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Form Section */
-.form-section {
-    flex: 1;
-    padding: 20px;
-    background: #e9f4ff; /* Azul claro */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.form-section h2 {
-    margin-bottom: 20px;
-}
-
-form {
+  }
+  
+  /* Main Content */
+  main {
+    padding: 2rem;
     display: flex;
-    flex-direction: column;
-}
-
-form label {
-    margin-bottom: 5px;
-}
-
-form input,
-form button {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-form button {
-    background-color: #007bff;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  /* Sections */
+  section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  section h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #28a745;
+  }
+  
+  /* Calendar Section */
+  #calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  #calendar-controls button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #calendar-controls button:hover {
+    background-color: #218838;
+  }
+  
+  #calendar {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  
+  #calendar th,
+  #calendar td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    width: 14.2%;
+  }
+  
+  #calendar th {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  #calendar td:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  /* Crops Section */
+  #crops-list {
+    margin-top: 1rem;
+  }
+  
+  #crop-items {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #crop-items li {
+    background: #e9ecef;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  #add-crop-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  #add-crop-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Plan Section */
+  #plan-form label {
+    display: block;
+    margin: 0.5rem 0 0.25rem;
+    font-weight: bold;
+  }
+  
+  #plan-form input,
+  #plan-form select,
+  #plan-form button {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  #plan-form button {
+    background-color: #28a745;
     color: white;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-form button:hover {
-    background-color: #0056b3;
-}
-
-/* Footer */
-.footer {
+  }
+  
+  #plan-form button:hover {
+    background-color: #218838;
+  }
+  
+  /* Footer */
+  footer {
     text-align: center;
-    padding: 10px;
-    background: #f1f1f1;
-    color: #666;
-    font-size: 14px;
-}
+    padding: 1rem;
+    background-color: #333;
+    color: white;
+    margin-top: 2rem;
+  }
+  
