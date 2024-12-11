@@ -14,6 +14,8 @@ body {
     color: white;
     padding: 1rem 0;
     text-align: center;
+    display: flex;
+    justify-content: center;
   }
   
   /* Main Content */
@@ -388,3 +390,9 @@ body {
       opacity: 1;
     }
   }
+
+  img{
+    height: 100px;
+    width: 100px;
+  }
+  

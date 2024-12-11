@@ -39,17 +39,22 @@ function renderCalendar(date) {
     const cell = document.createElement("td");
     cell.textContent = day;
 
-    // Buscar eventos
-    const event = events.find(
-      (e) =>
-        new Date(e.date).toDateString() ===
-        new Date(year, month, day).toDateString()
-    );
-    if (event) {
-      cell.classList.add("has-event");
-      cell.style.backgroundColor = "#cce5ff"; // Color de resaltado
-      cell.style.cursor = "pointer";
-    }
+    const cellDate = new Date(year, month, day).toISOString().split("T")[0];
+    const startEvent = events.find((e) => e.startDate === cellDate);
+    const harvestEvent = events.find((e) => e.harvestDate === cellDate);
+
+
+    if (startEvent) {
+        cell.classList.add("has-start-event");
+        cell.style.backgroundColor = "#fef981"; 
+        cell.style.cursor = "pointer";
+      }
+  
+      if (harvestEvent) {
+        cell.classList.add("has-harvest-event");
+        cell.style.backgroundColor = "#d4edda";
+        cell.style.cursor = "pointer";
+      }
 
     attachCellClickHandler(cell, day, year, month);
 
@@ -64,16 +69,18 @@ function renderCalendar(date) {
 
 // Adjuntar manejador de clic para las celdas del calendario
 function attachCellClickHandler(cell, day, year, month) {
-  cell.addEventListener("click", () => {
-    const selectedDate = new Date(year, month, day).toLocaleDateString();
-    const dayEvents = events.filter(
-      (e) =>
-        new Date(e.date).toDateString() ===
-        new Date(year, month, day).toDateString()
-    );
-    showModal(dayEvents, selectedDate);
-  });
-}
+    cell.addEventListener("click", () => {
+      const cellDate = new Date(year, month, day).toISOString().split("T")[0];
+  
+      const dayEvents = events.filter(
+        (e) => e.startDate === cellDate || e.harvestDate === cellDate
+      );
+  
+      const selectedDate = new Date(year, month, day).toLocaleDateString();
+      showModal(dayEvents, selectedDate);
+    });
+  }
+  
 
 // Navegar entre meses
 prevMonthBtn.addEventListener("click", () => {
@@ -114,9 +121,6 @@ function updateCropList() {
         // Si no está en uso, eliminar el cultivo
         cropItems.splice(index, 1);
         updateCropList();
-  
-        // Mostrar modal de confirmación
-        showDeleteConfirmationModal();
       });
   
       li.appendChild(deleteBtn);
@@ -129,46 +133,36 @@ function updateCropList() {
     });
   }
   
-  // Función para mostrar el modal de confirmación
-  function showDeleteConfirmationModal() {
-    const modal = document.getElementById("delete-confirmation-modal");
-    modal.style.display = "block";
-  
-    // Ocultar modal automáticamente después de 2 segundos
-    setTimeout(() => {
-      modal.style.display = "none";
-    }, 2000);
-  }
 
+// Planificar siembra
 planForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const crop = cropSelect.value;
   const area = document.querySelector("#area-input").value;
   const dateInput = document.querySelector("#date-input").value;
+  const durationInput = document.querySelector("#duration-input").value;
 
-  if (!crop || !area || !dateInput) {
+
+  if (!crop || !area || !dateInput || !durationInput) {
     alert("Por favor, completa todos los campos.");
     return;
   }
 
-  // Crear un objeto Date a partir de la fecha ingresada
   const selectedDate = new Date(dateInput);
-
-  // Ajustar la fecha para que no haya problemas de zona horaria
   selectedDate.setMinutes(selectedDate.getMinutes() + selectedDate.getTimezoneOffset());
 
-  // Agregar el nuevo evento al arreglo
-  events.push({ crop, area, date: selectedDate.toISOString() });
+  const harvestDate = new Date(selectedDate);
+  harvestDate.setDate(harvestDate.getDate() + parseInt(durationInput));
+
+  events.push({ crop, area, startDate: selectedDate.toISOString().split("T")[0], harvestDate: harvestDate.toISOString().split("T")[0] });
   alert("Evento agregado con éxito.");
   
-  // Renderizar el calendario nuevamente para mostrar el evento
   renderCalendar(currentDate);
 });
 
 // Mostrar modal con eventos del día
 function showModal(dayEvents, selectedDate) {
-  // Crear dinámicamente un modal para evitar conflictos
   const modal = document.createElement("div");
   modal.classList.add("modal");
   modal.innerHTML = `
@@ -187,51 +181,48 @@ function showModal(dayEvents, selectedDate) {
       const eventInfo = document.createElement("div");
       eventInfo.classList.add("event-info");
       eventInfo.innerHTML = `
+        <p><strong>Tipo:</strong> ${
+          event.startDate === selectedDate ? "Inicio" : "Cosecha"
+        }</p>
         <p><strong>Cultivo:</strong> ${event.crop}</p>
         <p><strong>Área:</strong> ${event.area} m²</p>
-        <p><strong>Fecha:</strong> ${new Date(event.date).toLocaleDateString()}</p>
-        <button class="view-btn" data-index="${index}">Ver</button>
-        <button class="edit-btn" data-index="${index}">Editar</button>
         <button class="delete-btn" data-index="${index}">Eliminar</button>
       `;
       modalEventsContainer.appendChild(eventInfo);
     });
+
+    // Manejar eventos de los botones de eliminar
+    modalEventsContainer.querySelectorAll(".delete-btn").forEach((btn) =>
+      btn.addEventListener("click", (e) => {
+        const eventIndex = e.target.getAttribute("data-index");
+
+        // Eliminar evento del array
+        const eventToDelete = dayEvents[eventIndex];
+        events.splice(
+          events.findIndex(
+            (e) =>
+              e.startDate === eventToDelete.startDate &&
+              e.harvestDate === eventToDelete.harvestDate
+          ),
+          1
+        );
+
+        alert("Evento eliminado con éxito.");
+        modal.remove(); // Cerrar modal después de eliminar
+        renderCalendar(currentDate); // Actualizar calendario
+      })
+    );
   } else {
     modalEventsContainer.innerHTML = "<p>No hay eventos para este día.</p>";
   }
 
-  // Mostrar modal
   modal.style.display = "block";
 
-  // Manejar cierre del modal
   modal.querySelector("#close-modal").addEventListener("click", () => {
-    modal.remove(); // Eliminar modal del DOM
+    modal.remove();
   });
-
-  // Manejar eventos de los botones
-  modalEventsContainer.querySelectorAll(".view-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const eventIndex = e.target.getAttribute("data-index");
-      viewEvent(dayEvents[eventIndex]);
-    })
-  );
-
-  modalEventsContainer.querySelectorAll(".edit-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const eventIndex = e.target.getAttribute("data-index");
-      editEvent(dayEvents[eventIndex]);
-    })
-  );
-
-  modalEventsContainer.querySelectorAll(".delete-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      const eventIndex = e.target.getAttribute("data-index");
-      deleteEvent(dayEvents[eventIndex]);
-      modal.remove(); // Cerrar modal después de eliminar
-      renderCalendar(currentDate); // Actualizar calendario
-    })
-  );
 }
+
 
 // Ver evento
 function viewEvent(event) {
@@ -262,7 +253,7 @@ function deleteEvent(event) {
   if (index > -1) {
     events.splice(index, 1);
     alert("Evento eliminado con éxito.");
-    renderCalendar(currentDate);
+    renderCalendar(currentDate); // Actualizar calendario
   }
 }
 
@@ -280,7 +271,7 @@ function openCropModal() {
   
     setTimeout(() => {
       modal.style.display = "none";
-    }, 500); 
+    }, 500); // Tiempo debe coincidir con la duración de la animación (0.5s)
   }
   
   
